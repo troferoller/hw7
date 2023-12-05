@@ -1,4 +1,5 @@
 package tests;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.RegistrationPage;
 
@@ -7,6 +8,7 @@ public class RegistrationPageFakerTest extends TestBase{
 
     RegistrationPage registrationPage = new RegistrationPage();
     TestData data = new TestData();
+
     @Test
     void checkFormRegistration(){
         registrationPage.openPage()
@@ -29,7 +31,7 @@ public class RegistrationPageFakerTest extends TestBase{
                 .resultCheck("Student Email", data.userEmail)
                 .resultCheck("Gender", data.gender)
                 .resultCheck("Mobile", data.userNumber)
-                .resultCheck("Date of Birth",data.year)
+                .resultCheck("Date of Birth",data.year +" "+data.month+", "+ data.day)
                 .resultCheck("Date of Birth", data.month)
                 .resultCheck("Date of Birth", data.day)
                 .resultCheck("Subjects", data.subject)
