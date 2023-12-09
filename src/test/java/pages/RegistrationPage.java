@@ -24,12 +24,17 @@ public class RegistrationPage {
             stateInput = $("#react-select-3-input"),
             cityInput = $("#react-select-4-input"),
             buttonSubmit = $("#submit"),
-            checkTable = $(".table-responsive");
+            checkTable = $(".table-responsive"),
+            setInput = $("#search-form #search");
 
 
     CalendarComponent calendarComponent = new CalendarComponent();
     ResultComponent formResult = new ResultComponent();
 
+    public RegistrationPage searchInput(String searchVid){
+        setInput.setValue(searchVid).pressEnter();
+        return this;
+    }
     public RegistrationPage closeAd() {
         executeJavaScript("$('#fixedban').remove()");
         executeJavaScript("$('footer').remove()");

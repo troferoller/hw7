@@ -1,6 +1,7 @@
 package tests;
 import com.codeborne.selenide.CollectionCondition;
-import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.Configuration;
+
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -9,12 +10,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import pages.RegistrationPage;
 
+import static com.codeborne.selenide.CollectionCondition.itemWithText;
+
 import static com.codeborne.selenide.Selenide.*;
 
 public class RegistrationObjectPage extends TestBase{
 
     RegistrationPage registrationPage = new RegistrationPage();
-    @Test
+
     @ValueSource(strings = {"Selenide", "Junit5"})
     @ParameterizedTest(name = "Для поиского запроса {0} должен отдавать не пустой запрос")
     @DisplayName("Тест-кейс")
@@ -25,6 +28,24 @@ public class RegistrationObjectPage extends TestBase{
         $$("[data-testid='mainline'] li[data-layout='organic']")
                 .shouldBe(CollectionCondition.sizeGreaterThan(0));
     }
+
+    @ValueSource(strings = {"Гарри Повар (Самое лучшее)", "Yardrey"})
+    @ParameterizedTest(name = "Поиск в ютубе {0}")
+    @DisplayName("Тест-кейс ютуба по поиску видео")
+    public void searchYouTube(String searchVid){
+        Configuration.holdBrowserOpen = true;
+        open("https://www.youtube.com");
+        registrationPage.searchInput(searchVid);
+        $$("ytd-video-renderer .ytd-video-renderer").shouldHave(itemWithText(searchVid));
+    }
+    @Disabled("Отключено")
+    @Test
+    @DisplayName("Проверка на отключенность")
+    void testWillBeIgnored() {
+        open("https://duckduckgo.com");
+    }
+
+
     @Test
     @DisplayName("Заполнение тестовых входных данных")
     @Tag("SMOKE")
