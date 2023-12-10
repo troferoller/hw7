@@ -7,12 +7,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import pages.RegistrationPage;
+import pages.data.La;
 
-import static com.codeborne.selenide.CollectionCondition.itemWithText;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
+
 
 public class RegistrationObjectPage extends TestBase{
 
@@ -29,15 +33,25 @@ public class RegistrationObjectPage extends TestBase{
                 .shouldBe(CollectionCondition.sizeGreaterThan(0));
     }
 
-    @ValueSource(strings = {"Гарри Повар (Самое лучшее)", "Yardrey"})
-    @ParameterizedTest(name = "Поиск в ютубе {0}")
-    @DisplayName("Тест-кейс ютуба по поиску видео")
-    public void searchYouTube(String searchVid){
+    @CsvSource(value = {"Selenide, Selenide is a framework for test automation powered by Selenium WebDriver that offers a concise fluent API, stable tests and powerful selectors",
+            "Junit5, JUnit 5 is the current generation of the JUnit testing framework, which provides a modern foundation for developer-side testing on the JVM"})
+    @ParameterizedTest(name = "Для поиского запроса {0} должен отдавать не пустой запрос")
+    @DisplayName("Тест-кейс")
+    public void searchYouTube(String searchFix, String searchText){
         Configuration.holdBrowserOpen = true;
-        open("https://www.youtube.com");
-        registrationPage.searchInput(searchVid);
-        $$("ytd-video-renderer .ytd-video-renderer").shouldHave(itemWithText(searchVid));
+        open("https://duckduckgo.com");
+        $("#searchbox_input").setValue(searchFix).pressEnter();
+        $("[data-testid='mainline'] li[data-layout='organic']").shouldHave(text(searchText));
     }
+
+    @EnumSource(La.class)
+    @ParameterizedTest
+    public void searchingDifferentExamplesOfText (La la){
+        open("https://ru.selenide.org/");
+        $$("#languages a").find(text(la.name())).click();
+        $("h3").shouldHave(text(la.description));
+    }
+
     @Disabled("Отключено")
     @Test
     @DisplayName("Проверка на отключенность")
