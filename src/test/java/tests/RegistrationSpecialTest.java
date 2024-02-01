@@ -1,16 +1,11 @@
 package tests;
 
+
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.logevents.SelenideLogger;
-import helpers.Attach;
-import io.qameta.allure.selenide.AllureSelenide;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
+
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.remote.DesiredCapabilities;
-
-import java.util.Map;
+import pages.RegistrationPage;
 
 import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Condition.text;
@@ -19,17 +14,17 @@ import static com.codeborne.selenide.Selenide.*;
 import static io.qameta.allure.Allure.step;
 
 public class RegistrationSpecialTest extends TestBase {
-
+    RegistrationPage registrationPage = new RegistrationPage();
 
     @Test
     @Tag("demoqa")
     void successfulRegistrationTest() {
         step("Open form", () -> {
             open("/automation-practice-form");
-            Configuration.holdBrowserOpen = true;
             $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
             executeJavaScript("$('#fixedban').remove()");
             executeJavaScript("$('footer').remove()");
+            registrationPage.closeCoocke();
             
         });
         step("Fill form", () -> {
@@ -44,7 +39,7 @@ public class RegistrationSpecialTest extends TestBase {
             $(".react-datepicker__day--030:not(.react-datepicker__day--outside-month)").click();
             $("#subjectsInput").setValue("Math").pressEnter();
             $("#hobbiesWrapper").$(byText("Sports")).click();
-            $("#uploadPicture").uploadFromClasspath("img/1.jpg");
+            $("#uploadPicture").uploadFromClasspath("1.jpg");
             $("#currentAddress").setValue("Some address 1");
             $("#state").click();
             $("#stateCity-wrapper").$(byText("NCR")).click();

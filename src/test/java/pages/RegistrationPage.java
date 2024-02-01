@@ -109,5 +109,12 @@ public class RegistrationPage {
         checkTable.shouldBe(hidden);
 
     }
+    public RegistrationPage closeCoocke(){
+        SelenideElement bannerRoot = $(".fc-consent-root");
+        if (bannerRoot.isDisplayed()) {
+            bannerRoot.$(byText("Consent")).click();
+        }
+        return this;
+    }
 
 }
