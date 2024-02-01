@@ -1,13 +1,16 @@
 package tests;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.Test;
 import pages.RegistrationPage;
 
-public class RegistrationObjectPage extends TestBase{
+public class RegistrationObjectPageTest extends TestBase{
 
     RegistrationPage registrationPage = new RegistrationPage();
 
     @Test
     void checkFormRegistration(){
+        SelenideLogger.addListener("allure", new AllureSelenide());
         registrationPage.openPage()
                 .closeAd()
                 .setFirstName("Valera")
@@ -40,6 +43,7 @@ public class RegistrationObjectPage extends TestBase{
 
     @Test
     void checkFormRegistrationRequiredFields(){
+        SelenideLogger.addListener("allure", new AllureSelenide());
         registrationPage.openPage()
                 .closeAd()
                 .setFirstName("Max")
@@ -62,6 +66,7 @@ public class RegistrationObjectPage extends TestBase{
 
     @Test
     void checkFormRegistrationEmptyFields() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
         registrationPage.openPage()
                 .closeAd()
                 .setClickButton()
