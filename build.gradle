@@ -43,11 +43,16 @@ tasks.withType(Test) {
             exceptionFormat "short"
         }
     }
+}
 
-    tasks example_test(type: Test) {
-        useJUnitPlatform() {
+task simple_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("example")
+    }
+}
 
-            includeTags("example")
-        }
+task demoqa_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("demoqa")
     }
 }
