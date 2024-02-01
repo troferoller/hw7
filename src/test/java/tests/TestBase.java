@@ -17,9 +17,9 @@ public class TestBase extends Attach {
     static void beforeAll() {
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = "1920x1080";
-        Configuration.browser = "chrome";
-        Configuration.timeout = 10000;
-//        Configuration.holdBrowserOpen = true;
+        Configuration.browser = "firefox";
+        Configuration.holdBrowserOpen = true;
+        Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(
@@ -32,15 +32,14 @@ public class TestBase extends Attach {
     }
 
     @AfterEach
-    void afterEach() {
+    void addAttachments() {
         clearBrowserCookies();
         clearBrowserLocalStorage();
         closeWebDriver();
         Attach.screenshotAs("Last screenshot");
         Attach.pageSource();
         Attach.browserConsoleLogs();
-        Attach.addVideo();
+        //Attach.addVideo();
+
     }
-
-
 }
