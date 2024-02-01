@@ -3,6 +3,8 @@ package tests;
 
 import com.codeborne.selenide.Configuration;
 
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.RegistrationPage;
@@ -20,6 +22,7 @@ public class RegistrationSpecialTest extends TestBase {
     @Tag("demoqa")
     void successfulRegistrationTest() {
         step("Open form", () -> {
+            SelenideLogger.addListener("allure", new AllureSelenide());
             open("/automation-practice-form");
             $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
             executeJavaScript("$('#fixedban').remove()");
@@ -28,6 +31,7 @@ public class RegistrationSpecialTest extends TestBase {
             
         });
         step("Fill form", () -> {
+            SelenideLogger.addListener("allure", new AllureSelenide());
             $("#firstName").setValue("Alex");
             $("#lastName").setValue("Egorov");
             $("#userEmail").setValue("alex@egorov.com");
@@ -48,6 +52,7 @@ public class RegistrationSpecialTest extends TestBase {
             $("#submit").click();
         });
         step("Verify results", () -> {
+            SelenideLogger.addListener("allure", new AllureSelenide());
             $(".modal-dialog").should(appear);
             $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
             $(".table-responsive").shouldHave(text("Alex"), text("Egorov"),
