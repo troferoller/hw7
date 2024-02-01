@@ -34,7 +34,6 @@ public class TestBase extends Attach {
     @AfterEach
     void addAttachments() {
         clearBrowserCookies();
-        clearBrowserLocalStorage();
         closeWebDriver();
         Attach.screenshotAs("Last screenshot");
         Attach.pageSource();
